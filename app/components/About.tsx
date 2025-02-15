@@ -21,10 +21,10 @@ const About = () => {
           transition={{ type: "spring", stiffness: 100 }}
           viewport={{ once: true }}
         >
-          A proficient Full Stack Developer with 2+ years of experience in both front-end and back-end development. I
+          A proficient Full Stack Developer with 2.6+ years of experience in both front-end and back-end development. I
           specialize in developing user-centric applications and leading projects from conception to deployment. My
           expertise lies in collaborative teamwork and leveraging innovative technologies to achieve project excellence.
-          I'm passionate about delivering efficient, maintainable code for long-term use and continuously improving my
+          I am passionate about delivering efficient, maintainable code for long-term use and continuously improving my
           skills in the ever-evolving tech landscape.
         </motion.p>
       </div>
