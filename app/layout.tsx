@@ -1,6 +1,9 @@
 import "./globals.css"
 import { Inter } from "next/font/google"
-import type React from "react" // Import React
+import type React from "react"
+import Chatbot from "./components/Chatbot"
+import { DarkModeProvider } from "./DarkModeContext"
+import ParticleBackground from "./components/ParticleBackground"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -16,7 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <DarkModeProvider>
+        <body className={`${inter.className} transition-colors duration-300`}>
+          <ParticleBackground />
+          {children}
+          <Chatbot />
+        </body>
+      </DarkModeProvider>
     </html>
   )
 }

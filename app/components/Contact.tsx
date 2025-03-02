@@ -1,74 +1,70 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { FaEnvelope, FaPhone, FaLinkedin, FaMedium, FaGithub } from "react-icons/fa"
+import { useDarkMode } from "../DarkModeContext"
 
 const Contact = () => {
+  const { darkMode } = useDarkMode()
+
+  const contactInfo = [
+    { icon: FaEnvelope, text: "amitkpro222@gmail.com", href: "mailto:amitkpro222@gmail.com" },
+    { icon: FaPhone, text: "+91 7657807660", href: "tel:+917657807660" },
+    { icon: FaLinkedin, text: "linkedin.com/in/amitkpro", href: "https://www.linkedin.com/in/amitkpro" },
+    { icon: FaMedium, text: "medium.com/@amitkpro", href: "https://medium.com/@amitkpro" },
+    { icon: FaGithub, text: "github.com/amitkpro", href: "https://github.com/amitkpro" },
+  ]
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  }
+
   return (
     <motion.section
       id="contact"
-      className="py-20 bg-white"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      className={`py-20 ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"}`}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true }}
+      variants={containerVariants}
     >
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">Contact Me</h2>
-        <div className="max-w-md mx-auto">
-          <motion.div
-            className="mb-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-lg font-semibold mb-2">Email</h3>
-            <p className="text-gray-700">amitkpro222@gmail.com</p>
-          </motion.div>
-          <motion.div
-            className="mb-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-lg font-semibold mb-2">Phone</h3>
-            <p className="text-gray-700">+91 7657807660</p>
-          </motion.div>
-          <motion.div
-            className="mb-4"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-lg font-semibold mb-2">LinkedIn</h3>
-            <a
-              href="https://www.linkedin.com/in/amitkpro"
+        <motion.h2 className="text-4xl font-bold mb-12 text-center" variants={itemVariants}>
+          Get in Touch
+        </motion.h2>
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" variants={containerVariants}>
+          {contactInfo.map((info, index) => (
+            <motion.a
+              key={index}
+              href={info.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
+              className={`flex items-center p-6 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 ${
+                darkMode ? "bg-gray-800 hover:bg-gray-700" : "bg-gray-100 hover:bg-gray-200"
+              }`}
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.95 }}
             >
-              www.linkedin.com/in/amitkpro
-            </a>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-lg font-semibold mb-2">Medium</h3>
-            <a
-              href="https://medium.com/@amitkpro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:underline"
-            >
-              medium.com/@amitkpro
-            </a>
-          </motion.div>
-        </div>
+              <info.icon className={`text-3xl mr-4 ${darkMode ? "text-blue-400" : "text-blue-600"}`} />
+              <span className="text-lg">{info.text}</span>
+            </motion.a>
+          ))}
+        </motion.div>
       </div>
     </motion.section>
   )

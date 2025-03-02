@@ -39,7 +39,7 @@ export default function Home() {
         <About />
         <Skills />
         <Experience />
-        <Projects />
+    {/*  <Projects /> */}
         <Contact />
       </motion.div>
     </main>
