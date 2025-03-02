@@ -6,7 +6,7 @@ import { FaFileAlt, FaDownload } from "react-icons/fa"
 import { useDarkMode } from "../DarkModeContext"
 
 const Hero = () => {
-  let downloadUrl = "https://drive.google.com/uc?export=download&id=1gcqOKMwMVUzEPLK3qrZEuJsBqJn0FPsy"
+  const downloadUrl = "https://drive.google.com/uc?export=download&id=1gcqOKMwMVUzEPLK3qrZEuJsBqJn0FPsy"
   const cvUrl = "https://drive.google.com/file/d/1gcqOKMwMVUzEPLK3qrZEuJsBqJn0FPsy/view"
   const { darkMode } = useDarkMode()
   const [typewriterText, setTypewriterText] = useState("")

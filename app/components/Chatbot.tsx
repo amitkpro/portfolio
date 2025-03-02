@@ -5,34 +5,40 @@ import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useChat } from '@ai-sdk/react';
-import { FaRobot, FaTimes, FaPaperPlane, FaMoon, FaSun } from "react-icons/fa"
+import type { Message } from '@ai-sdk/react';
+import { FaRobot, FaTimes, FaPaperPlane } from "react-icons/fa"
 import { useDarkMode } from "../DarkModeContext"
 
-const personalBio = {
-  name: "Amit Kumar",
-  role: "Full Stack Developer",
-  experience: "3+ years",
-  skills: ["JavaScript", "React", "Node.js", "TypeScript", "MongoDB", "AWS"],
-  projects: [
-    {
-      name: "InsiderHealth AI",
-      description: "AI-powered health platform with personalized insights",
-      techStack: "Next.js, TypeScript, MySQL, AI models",
-    },
-    {
-      name: "Druyp",
-      description: "House renting platform streamlining the rental process",
-      techStack: "Node.js, React.js, MSSQL, Elasticsearch, Socket.IO",
-    },
-    {
-      name: "Tradix",
-      description: "Crypto trading platform for web and mobile",
-      techStack: "React.js, React Native, PHP",
-    },
-  ],
-  education: "Bachelor of Technology in Computer Science and Engineering",
-  interests: ["Programming", "Traveling", "Outdoor Games"],
+// const personalBio = {
+//   name: "Amit Kumar",
+//   role: "Full Stack Developer",
+//   experience: "3+ years",
+//   skills: ["JavaScript", "React", "Node.js", "TypeScript", "MongoDB", "AWS"],
+//   projects: [
+//     {
+//       name: "InsiderHealth AI",
+//       description: "AI-powered health platform with personalized insights",
+//       techStack: "Next.js, TypeScript, MySQL, AI models",
+//     },
+//     {
+//       name: "Druyp",
+//       description: "House renting platform streamlining the rental process",
+//       techStack: "Node.js, React.js, MSSQL, Elasticsearch, Socket.IO",
+//     },
+//     {
+//       name: "Tradix",
+//       description: "Crypto trading platform for web and mobile",
+//       techStack: "React.js, React Native, PHP",
+//     },
+//   ],
+//   education: "Bachelor of Technology in Computer Science and Engineering",
+//   interests: ["Programming", "Traveling", "Outdoor Games"],
+// }
+
+interface staticAnswers {
+  [key: string]: string
 }
+
 
 const predefinedQuestions = [
   "What are Amit's main skills?",
@@ -42,7 +48,7 @@ const predefinedQuestions = [
   "What are Amit's interests?",
 ]
 
-const staticAnswers :any= {
+const staticAnswers :staticAnswers= {
   "What are Amit's main skills?":
     "Amit's main skills include JavaScript, React, Node.js, TypeScript, MongoDB, and AWS. He's a versatile Full Stack Developer with expertise in both frontend and backend technologies.",
   "Tell me about Amit's work experience":
@@ -67,7 +73,7 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false)
   const { messages, input, handleInputChange, handleSubmit, setInput, setMessages } = useChat()
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const { darkMode, toggleDarkMode } = useDarkMode()
+  const { darkMode } = useDarkMode()
   const [dynamicText, setDynamicText] = useState(dynamicTexts[0])
   const chatbotRef = useRef(null)
 
@@ -93,29 +99,42 @@ const Chatbot = () => {
 
   const handleQuestionClick = (question: string) => {
     setInput(question)
-    handleSubmit(new Event("submit") as any)
+    handleSubmit(new Event("submit") as unknown as React.FormEvent)
   }
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsTyping(true)
-    const userMessage = { role: "user", content: input }
-    setMessages((prevMessages):any => [...prevMessages, userMessage])
+  
+    const userMessage: Message = {id:Date.now().toString(),  role: "user", content: input }
+    
+    setMessages((prevMessages: Message[]) => [ 
+      ...prevMessages,
+      userMessage
+    ])
+  
     setInput("")
-
+  
     // Simulate AI typing
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    let inputdata:any = input ?? ""
-    let aiResponse
+  
+    const inputdata: string = input ?? "" // ✅ No explicit any
+    let aiResponse: string
+  
     if (staticAnswers[inputdata]) {
       aiResponse = staticAnswers[inputdata]
     } else {
       aiResponse =
         "I'm still learning about Amit! I can answer questions about his skills, work experience, projects, education, and interests. For other questions, please check back later as I'm continuously improving!"
     }
-
-    const aiMessage = { role: "assistant", content: aiResponse }
-    setMessages((prevMessages):any => [...prevMessages, aiMessage])
+  
+    const aiMessage: Message = { id:Date.now()?.toString() ,role: "assistant", content: aiResponse }
+  
+    setMessages((prevMessages: Message[]) => [ 
+      ...prevMessages,
+      aiMessage
+    ])
+  
     setIsTyping(false)
   }
 
