@@ -1,7 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useInView } from "framer-motion"
 import ProjectCard from "./ProjectCard"
+import { useDarkMode } from "../DarkModeContext"
 
 const projects = [
   {
@@ -16,6 +18,7 @@ const projects = [
       "Designed and implemented RESTful APIs for seamless communication between frontend and backend.",
       "Optimized database queries and implemented caching strategies to improve application performance.",
     ],
+    imageUrl: "/placeholder.svg?height=300&width=500",
   },
   {
     title: "Crypto Market Project: Mobile App (Tradix V1) & Advanced Trading Web Platform",
@@ -30,6 +33,7 @@ const projects = [
       "Designed and implemented a responsive UI that provides a consistent user experience across web and mobile platforms.",
       "Integrated advanced trading tools and real-time market data feeds.",
     ],
+    imageUrl: "/placeholder.svg?height=300&width=500",
   },
   {
     title: "Perk Tool (Learning Management System)",
@@ -44,6 +48,7 @@ const projects = [
       "Collaborated with backend developers to integrate APIs and ensure smooth data flow.",
       "Implemented state management using Redux to handle complex application state.",
     ],
+    imageUrl: "/placeholder.svg?height=300&width=500",
   },
   {
     title: "CS Online Learning Management System",
@@ -57,29 +62,41 @@ const projects = [
       "Integrated real-time notifications and messaging features to improve communication within the platform.",
       "Collaborated with the backend team to design and consume RESTful APIs for data management.",
     ],
+    imageUrl: "/placeholder.svg?height=300&width=500",
   },
 ]
 
 const Projects = () => {
+  const { darkMode } = useDarkMode()
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
+
   return (
     <motion.section
-      id="projects"
-      className="py-20 bg-gray-100"
+      // id="projects"
+      ref={sectionRef}
+      className={`py-20 ${darkMode ? "bg-gray-900" : "bg-gray-100"}`}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 1 }}
-      viewport={{ once: true }}
     >
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">Projects</h2>
+        <motion.h2
+          className={`text-3xl font-bold mb-8 text-center ${darkMode ? "text-white" : "text-gray-800"}`}
+          initial={{ y: -20, opacity: 0 }}
+          animate={isInView ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Projects
+        </motion.h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
+              whileHover={{ scale: 1.03 }}
             >
               <ProjectCard project={project} />
             </motion.div>

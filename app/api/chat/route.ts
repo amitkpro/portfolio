@@ -1,18 +1,20 @@
-import { openai } from "@ai-sdk/openai"
-import { streamText } from "ai"
-
-// Allow streaming responses up to 30 seconds
-export const maxDuration = 30
+import { NextResponse } from "next/server"
+import { getGroqResponse } from "@/app/utils/groqService"
 
 export async function POST(req: Request) {
-  const { messages } = await req.json()
+  try {
+    const { message } = await req.json()
 
-  const result = streamText({
-    model: openai("gpt-4-turbo"),
-    system: "You are a helpful assistant.",
-    messages,
-  })
+    if (!message) {
+      return NextResponse.json({ error: "Message is required" }, { status: 400 })
+    }
 
-  return result.toDataStreamResponse()
+    const response = await getGroqResponse(message)
+
+    return NextResponse.json({ response })
+  } catch (error) {
+    console.error("Error in chat API:", error)
+    return NextResponse.json({ error: "Failed to process your request" }, { status: 500 })
+  }
 }
 

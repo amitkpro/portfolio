@@ -16,6 +16,11 @@ export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   useEffect(() => {
     const isDarkMode = localStorage.getItem("darkMode") === "true"
     setDarkMode(isDarkMode)
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
   }, [])
 
   const toggleDarkMode = () => {

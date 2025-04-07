@@ -6,13 +6,13 @@ import { FaFileAlt, FaDownload } from "react-icons/fa"
 import { useDarkMode } from "../DarkModeContext"
 
 const Hero = () => {
-  const downloadUrl = "https://drive.google.com/uc?export=download&id=1gcqOKMwMVUzEPLK3qrZEuJsBqJn0FPsy"
+   const downloadUrl = "https://drive.google.com/uc?export=download&id=1gcqOKMwMVUzEPLK3qrZEuJsBqJn0FPsy"
   const cvUrl = "https://drive.google.com/file/d/1gcqOKMwMVUzEPLK3qrZEuJsBqJn0FPsy/view"
   const { darkMode } = useDarkMode()
   const [typewriterText, setTypewriterText] = useState("")
   const fullText = "Full Stack Developer | React Specialist | Node.js Expert"
   const [textIndex, setTextIndex] = useState(0)
-  
+
   useEffect(() => {
     if (textIndex < fullText.length) {
       const timeout = setTimeout(() => {
@@ -45,28 +45,32 @@ const Hero = () => {
         }}
       />
 
-      <div className="text-center relative z-10">
+      <div className="text-center relative z-10 px-4 w-full max-w-4xl">
         <motion.h1
-          className={`text-5xl font-bold mb-4 ${darkMode ? "text-white" : "text-white"}`}
+          className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 ${darkMode ? "text-white" : "text-white"}`}
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ type: "spring", stiffness: 100 }}
         >
           Amit Kumar
         </motion.h1>
-        <motion.h2
-          className={`text-3xl mb-8 ${darkMode ? "text-gray-300" : "text-white"} h-16`} // Added fixed height
+        <motion.div
+          className="relative min-h-[4rem] md:min-h-[5rem] flex justify-center items-center mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          {typewriterText}
-          <span className="animate-blink">|</span>
-        </motion.h2>
-        <div className="flex justify-center space-x-4">
+          <h2
+            className={`text-xl md:text-2xl lg:text-3xl ${darkMode ? "text-gray-300" : "text-white"} text-center break-words`}
+          >
+            {typewriterText}
+            <span className="animate-blink">|</span>
+          </h2>
+        </motion.div>
+        <div className="flex flex-wrap justify-center gap-4">
           <motion.a
             href="#contact"
-            className={`${darkMode ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-white text-purple-600 hover:bg-purple-100"} px-6 py-3 rounded-full font-semibold transition duration-300 flex items-center`}
+            className={`${darkMode ? "bg-blue-600 text-white hover:bg-blue-700" : "bg-white text-purple-600 hover:bg-purple-100"} px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition duration-300 flex items-center text-sm md:text-base`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -76,7 +80,7 @@ const Hero = () => {
             href={cvUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${darkMode ? "bg-gray-700 text-white hover:bg-gray-600" : "bg-transparent border-2 border-white text-white hover:bg-white hover:text-purple-600"} px-6 py-3 rounded-full font-semibold transition duration-300 flex items-center`}
+            className={`${darkMode ? "bg-gray-700 text-white hover:bg-gray-600" : "bg-transparent border-2 border-white text-white hover:bg-white hover:text-purple-600"} px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition duration-300 flex items-center text-sm md:text-base`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -85,7 +89,7 @@ const Hero = () => {
           <motion.a
             href={downloadUrl}
             download="Amit_Kumar_CV.pdf"
-            className={`${darkMode ? "bg-green-600 text-white hover:bg-green-700" : "bg-green-500 text-white hover:bg-green-600"} px-6 py-3 rounded-full font-semibold transition duration-300 flex items-center`}
+            className={`${darkMode ? "bg-green-600 text-white hover:bg-green-700" : "bg-green-500 text-white hover:bg-green-600"} px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold transition duration-300 flex items-center text-sm md:text-base`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
