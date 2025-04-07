@@ -4,9 +4,9 @@ import { cvData } from "./cvData"
 // Function to get the API key from localStorage (client-side only)
 const getApiKey = () => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem("GROQ_API_KEY") || process.env.NEXT_PUBLIC_GROQ_API_KEY || "default-key-placeholder"
+    return localStorage.getItem("GROQ_API_KEY") || process.env.NEXT_GROQ_API_KEY || "default-key-placeholder"
   }
-  return process.env.NEXT_PUBLIC_GROQ_API_KEY || "default-key-placeholder"
+  return process.env.NEXT_GROQ_API_KEY || "default-key-placeholder"
 }
 
 // Initialize the GROQ client
