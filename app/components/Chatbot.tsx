@@ -847,6 +847,7 @@ const Chatbot = () => {
 
   // Dynamic text rotation
   useEffect(() => {
+    console.log(transcript, finalTranscript)  // remove this in next version
     const interval = setInterval(() => {
       setDynamicText(dynamicTexts[Math.floor(Math.random() * dynamicTexts.length)])
     }, 5000)

@@ -34,7 +34,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <div ref={cardRef} className="relative w-full h-[400px] perspective-1000">
         <motion.div
           className="w-full h-full transition-all duration-500 preserve-3d cursor-pointer"
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
+          // animate={{ rotateY: isFlipped ? 180 : 0 }}
           onClick={() => setIsFlipped(!isFlipped)}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
