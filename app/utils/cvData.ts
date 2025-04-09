@@ -8,7 +8,7 @@ export const cvData = {
     github: "github.com/amitkpro",
     medium: "medium.com/@amitkpro",
     summary:
-      "A proficient Full Stack Developer with 3+ years of experience in both front-end and back-end development. I specialize in developing user-centric applications and leading projects from conception to deployment. My expertise lies in collaborative teamwork and leveraging innovative technologies to achieve project excellence.",
+      "A proficient Full Stack Developer with 3+ years of experience in both front-end and back-end development. I specialize in developing user-centric applications and leading projects from conception to deployment. My expertise lies in collaborative teamwork and leveraging innovative technologies to achieve project excellence. Worked in 10+ diverse projects including AI-integrated platforms like InsidersHealth.",
   },
   skills: [
     { name: "JavaScript", level: "Expert", years: 3 },
@@ -26,6 +26,8 @@ export const cvData = {
     { name: "Jest", level: "Intermediate", years: 1.5 },
     { name: "Mocha", level: "Intermediate", years: 1 },
     { name: "Cypress", level: "Intermediate", years: 1 },
+    { name: "AWS", level: "Intermediate", years: 1 },
+    { name: "EC2", level: "Intermediate", years: 1 },
   ],
   experience: [
     {
@@ -59,25 +61,39 @@ export const cvData = {
   ],
   projects: [
     {
-      title: "InsiderHealth AI",
-      description: "An AI-powered health platform offering personalized health insights.",
+      title: "InsidersHealth AI – AI-Powered Health & Wellness Platform",
+      description:
+        "InsidersHealth AI is an advanced health-focused platform leveraging cutting-edge AI technologies to provide personalized health suggestions and tools. It integrates APIs like ChatGPT and Perplexity AI to deliver custom diet plans, health tracking, and wellness support tailored to individual users.",
       role: "Full Stack Developer",
-      technologies: ["Next.js", "TypeScript", "MySQL", "AI models"],
-      contributions: [
-        "Integrated ChatGPT & Perplexity AI for smart health suggestions.",
-        "Developed a custom diet planner and health tracking dashboard.",
+      technologies: [
+        "Next.js",
+        "TypeScript",
+        "MySQL",
+        "ChatGPT API",
+        "Perplexity API"
       ],
-    },
+      contributions: [
+        "Developed responsive and scalable UI using Next.js with TypeScript, focusing on user accessibility and performance.",
+        "Integrated ChatGPT and Perplexity APIs to deliver AI-powered personalized health suggestions and conversational experiences.",
+        "Implemented dynamic diet planning tools, allowing users to receive tailored nutrition plans based on individual health goals.",
+        "Built health tracking modules to help users monitor and record key wellness metrics over time.",
+        "Managed MySQL database for efficient and secure user data storage, supporting real-time interactions and insights."
+      ],
+      outcome:
+        "Built a seamless, intelligent health assistant platform that empowers users with AI-driven tools to manage wellness, nutrition, and lifestyle habits. The platform is under active development, with a focus on refining AI integration and improving health tracking capabilities."
+    },    
     {
       title: "Druyp Project - House Renting Platform",
       description:
         "A comprehensive platform designed to simplify the house renting process for tenants, homeowners, and service providers.",
       role: "Full Stack Developer",
-      technologies: ["Node.js", "MSSQL", "Sequelize ORM", "Elasticsearch", "React.js", "Socket.IO"],
+      technologies: ["Node.js", "MSSQL", "Sequelize ORM", "Elasticsearch", "React.js", "Socket.IO", "Redis"],
       contributions: [
         "Implemented server-side logic, database management, and advanced search functionalities.",
         "Played a critical role in developing features that streamlined the rental experience, ensuring high standards of maintenance and user satisfaction.",
       ],
+      outcome:
+        "Enhanced user engagement by developing server-side logic, database management, and advanced search capabilities for a rental platform.",
     },
     {
       title: "Crypto Market Platform - Tradix",
@@ -89,6 +105,8 @@ export const cvData = {
         "Developed and led key features for a crypto trading platform, enhancing mobile and web app user engagement through real-time chat, data visualization, and personalized alerts.",
         "Improved UI/UX and integrated advanced trading tools, ensuring a seamless, cohesive user experience across platforms.",
       ],
+      outcome:
+        "Spearheaded real-time chat and data visualization features, delivering a consistent trading experience on both web and mobile applications.",
     },
     {
       title: "Perk Tool - Learning Management System",
@@ -99,17 +117,34 @@ export const cvData = {
       contributions: [
         "Spearheaded frontend development, introducing intuitive UI/UX designs and collaborating with backend teams for feature integration.",
       ],
+      outcome:
+        "Improved learning engagement by designing an intuitive UI and collaborating with backend teams for streamlined functionality.",
     },
   ],
   education: [
     {
       degree: "Bachelor of Technology",
       field: "Computer Science and Engineering",
-      institution: "Engineering College",
-      location: "India",
-      graduationYear: 2021,
+      institution: "I.K. Gujral Punjab Technical University",
+      location: "Jalandhar, Punjab, India",
+      graduationYear: 2022,
     },
   ],
-  interests: ["Programming", "Traveling", "Outdoor Games"],
-}
-
+  strengths: [
+    "Proficient in modern JavaScript frameworks and libraries, enabling the development of dynamic and responsive applications.",
+    "Strong problem-solving skills, allowing for effective troubleshooting and optimization of complex systems.",
+    "Excellent collaboration and communication abilities, facilitating seamless teamwork across diverse project stakeholders.",
+    "Adaptability to emerging technologies, ensuring continuous learning and application of innovative solutions.",
+    "Leadership experience in mentoring junior developers and leading projects from conception to deployment.",
+  ],
+  weaknesses: [
+    "Tendency to focus extensively on perfecting code quality, which can occasionally affect project timelines. However, this ensures the delivery of robust and maintainable code.",
+    "Preference for hands-on involvement in multiple project aspects, which may lead to taking on numerous responsibilities. This reflects a commitment to understanding and contributing to all facets of development.",
+  ],
+  personality: [
+    "Detail-oriented and analytical thinker, consistently striving for excellence in code quality and application performance.",
+    "Proactive and self-motivated, with a passion for continuous learning and staying abreast of industry trends.",
+    "Empathetic team player who values open communication and fosters a collaborative work environment.",
+    "Resilient and adaptable, capable of navigating challenges and embracing change.",
+  ],
+};
