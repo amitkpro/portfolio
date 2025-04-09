@@ -1420,9 +1420,11 @@ const Chatbot = () => {
           // Clean up any existing instance
           if (recognitionRef.current) {
             try {
+              /* eslint-disable @typescript-eslint/no-explicit-any */
               recognitionRef.current.onresult = null as any
               recognitionRef.current.onend = null as any
               recognitionRef.current.onerror = null as any
+              /* eslint-enable @typescript-eslint/no-explicit-any */
               recognitionRef.current.abort()
             } catch (error) {
               console.error("Error cleaning up existing recognition:", error)
@@ -1584,6 +1586,7 @@ const Chatbot = () => {
 
   // Dynamic text rotation
   useEffect(() => {
+    console.log(transcript, finalTranscript) // remove this in next version
     const interval = setInterval(() => {
       setDynamicText(dynamicTexts[Math.floor(Math.random() * dynamicTexts.length)])
     }, 5000)
@@ -1662,6 +1665,7 @@ const Chatbot = () => {
           recognitionRef.current.stop()
         }
       } catch (error) {
+        console.error("Error stopping speech recognition:", error)
         // Ignore errors here, it might not be started yet
       }
 
