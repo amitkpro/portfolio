@@ -5,7 +5,8 @@ import Chatbot from "./components/Chatbot"
 import { DarkModeProvider } from "./DarkModeContext"
 import ParticleBackground from "./components/ParticleBackground"
 // import GroqApiKeySetup from "./components/GroqApiKeySetup"
-
+import { Analytics } from '@vercel/analytics/next';
+ import { SpeedInsights } from '@vercel/speed-insights/next';
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -25,6 +26,8 @@ export default function RootLayout({
           <ParticleBackground />
           {children}
           <Chatbot />
+          <Analytics  />
+          <SpeedInsights />
           {/* <GroqApiKeySetup /> */}
         </body>
       </DarkModeProvider>
