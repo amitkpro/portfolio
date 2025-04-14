@@ -6,6 +6,7 @@ import { useState, useRef } from "react"
 import { motion, AnimatePresence, useInView } from "framer-motion"
 import { FaArrowRight, FaGithub, FaExternalLinkAlt, FaTimes } from "react-icons/fa"
 import { useDarkMode } from "../DarkModeContext"
+import { useLanguage } from "../LanguageContext"
 
 interface ProjectCardProps {
   project: {
@@ -26,6 +27,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const cardRef = useRef(null)
   const isInView = useInView(cardRef, { once: true, amount: 0.3 })
   const { darkMode } = useDarkMode()
+  const { t } = useLanguage()
 
   const techStackArray = project.techStack.split(", ")
 
@@ -47,10 +49,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
             <p className={`${darkMode ? "text-gray-300" : "text-gray-700"} mb-4`}>{project.description}</p>
             <p className={`${darkMode ? "text-gray-400" : "text-gray-600"} mb-2`}>
-              <strong>Tech Stack:</strong> {project.techStack}
+              <strong>{t("experience.techStack")}:</strong> {project.techStack}
             </p>
             <p className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-              <strong>Role:</strong> {project.role}
+              <strong>{t("experience.role")}:</strong> {project.role}
             </p>
             <div className="absolute bottom-4 right-4 text-blue-500 flex items-center">
               <motion.span
@@ -59,7 +61,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 animate={{ x: 0 }}
                 transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: "reverse", duration: 0.6 }}
               >
-                View Details
+                {t("experience.keyContributions")}
               </motion.span>
               <FaArrowRight />
             </div>
@@ -71,7 +73,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           >
             <div className="p-6 overflow-y-auto flex-grow">
               <h3 className="text-xl font-semibold mb-4">{project.title}</h3>
-              <h4 className="text-lg font-semibold mb-2">Key Contributions:</h4>
+              <h4 className="text-lg font-semibold mb-2">{t("experience.keyContributions")}:</h4>
               <ul className="list-disc list-inside space-y-2 mb-4">
                 {project.contributions.map((contribution, index) => (
                   <motion.li
@@ -94,7 +96,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                   setShowModal(true)
                 }}
               >
-                View Full Details
+                {t("experience.keyContributions")}
               </motion.button>
             </div>
             <motion.div
@@ -167,7 +169,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 transition={{ delay: 0.4 }}
               >
                 <h4 className={`text-xl font-semibold mb-2 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
-                  Tech Stack
+                  {t("experience.techStack")}
                 </h4>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {techStackArray.map((tech, index) => (
@@ -191,13 +193,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                <h4 className={`text-xl font-semibold mb-2 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>Role</h4>
+                <h4 className={`text-xl font-semibold mb-2 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
+                  {t("experience.role")}
+                </h4>
                 <p className={`${darkMode ? "text-gray-300" : "text-gray-700"}`}>{project.role}</p>
               </motion.div>
 
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
                 <h4 className={`text-xl font-semibold mb-2 ${darkMode ? "text-gray-200" : "text-gray-800"}`}>
-                  Key Contributions
+                  {t("experience.keyContributions")}
                 </h4>
                 <ul className={`list-disc list-inside space-y-2 ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
                   {project.contributions.map((contribution, index) => (
@@ -253,4 +257,3 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 }
 
 export default ProjectCard
-

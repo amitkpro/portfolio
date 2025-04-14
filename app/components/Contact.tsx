@@ -3,9 +3,11 @@
 import { motion } from "framer-motion"
 import { FaEnvelope, FaPhone, FaLinkedin, FaMedium, FaGithub } from "react-icons/fa"
 import { useDarkMode } from "../DarkModeContext"
+import { useLanguage } from "../LanguageContext"
 
 const Contact = () => {
   const { darkMode } = useDarkMode()
+  const { t } = useLanguage()
 
   const contactInfo = [
     { icon: FaEnvelope, text: "amitkpro222@gmail.com", href: "mailto:amitkpro222@gmail.com" },
@@ -44,7 +46,7 @@ const Contact = () => {
     >
       <div className="container mx-auto px-6">
         <motion.h2 className="text-4xl font-bold mb-12 text-center" variants={itemVariants}>
-          Get in Touch
+          {t("contact.title")}
         </motion.h2>
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto" variants={containerVariants}>
           {contactInfo.map((info, index) => (
@@ -71,4 +73,3 @@ const Contact = () => {
 }
 
 export default Contact
-

@@ -3,10 +3,11 @@ import { Inter } from "next/font/google"
 import type React from "react"
 import Chatbot from "./components/Chatbot"
 import { DarkModeProvider } from "./DarkModeContext"
+import { LanguageProvider } from "./LanguageContext"
 import ParticleBackground from "./components/ParticleBackground"
-// import GroqApiKeySetup from "./components/GroqApiKeySetup"
-import { Analytics } from '@vercel/analytics/next';
- import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -21,17 +22,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <DarkModeProvider>
-        <body className={`${inter.className} transition-colors duration-300`}>
-          <ParticleBackground />
-          {children}
-          <Chatbot />
-          <Analytics  />
-          <SpeedInsights />
-          {/* <GroqApiKeySetup /> */}
-        </body>
-      </DarkModeProvider>
+      <LanguageProvider>
+        <DarkModeProvider>
+          <body className={`${inter.className} transition-colors duration-300`}>
+            <ParticleBackground />
+            {children}
+            <Chatbot />
+            <Analytics />
+            <SpeedInsights />
+          </body>
+        </DarkModeProvider>
+      </LanguageProvider>
     </html>
   )
 }
-

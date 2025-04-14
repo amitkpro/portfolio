@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion"
 import { useDarkMode } from "../DarkModeContext"
+import { useLanguage } from "../LanguageContext"
 
 const About = () => {
   const { darkMode } = useDarkMode()
+  const { t } = useLanguage()
 
   return (
     <motion.section
@@ -16,7 +18,7 @@ const About = () => {
       viewport={{ once: true }}
     >
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">About Me</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">{t("about.title")}</h2>
         <motion.p
           className={`text-lg max-w-3xl mx-auto ${darkMode ? "text-gray-300" : "text-gray-700"}`}
           initial={{ y: 50 }}
@@ -24,11 +26,7 @@ const About = () => {
           transition={{ type: "spring", stiffness: 100 }}
           viewport={{ once: true }}
         >
-         A proficient Full Stack Developer with 3+ years of experience in both front-end and back-end development. I
-  specialize in developing user-centric applications and leading projects from conception to deployment. My
-  expertise lies in collaborative teamwork and leveraging innovative technologies to achieve project excellence.
-  I&apos;m passionate about delivering efficient, maintainable code for long-term use and continuously improving my
-  skills in the ever-evolving tech landscape.
+          {t("about.description")}
         </motion.p>
       </div>
     </motion.section>
@@ -36,4 +34,3 @@ const About = () => {
 }
 
 export default About
-
