@@ -58,7 +58,7 @@ const Experience = () => {
       contributions: ["experience.tradix.contributions.contribution1", "experience.tradix.contributions.contribution2"],
     },
     {
-      title: "perkTool.title",
+      title: "experience.perkTool.title",
       overview: "experience.perkTool.overview",
       techStack: "experience.perkTool.techStack",
       role: "experience.perkTool.role",

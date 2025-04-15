@@ -9,6 +9,7 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { FaRobot, FaTimes, FaPaperPlane, FaMoon, FaSun, FaMicrophone, FaVolumeUp } from "react-icons/fa"
 import { useDarkMode } from "../DarkModeContext"
+import { useLanguage } from "../LanguageContext"
 
 // Add TypeScript declarations for the Web Speech API
 interface SpeechRecognition extends EventTarget {
@@ -62,13 +63,12 @@ declare global {
 
 // Voice mode states
 type VoiceState = "idle" | "listening" | "processing" | "speaking"
-
 const predefinedQuestions = [
-  "What are Amit's main skills?",
-  "Tell me about Amit's work experience",
-  "What projects has Amit worked on?",
-  "What's Amit's educational background?",
-  "What are Amit's interests?",
+  { name: "What are Amit's main skills?", keyName: "skills" },
+  { name: "Tell me about Amit's work experience", keyName: "experience" },
+  { name: "What projects has Amit worked on?", keyName: "projects" },
+  { name: "What's Amit's educational background?", keyName: "education" },
+  { name: "What are Amit's interests?", keyName: "interests" },
 ]
 
 const dynamicTexts = [
@@ -102,6 +102,9 @@ const Chatbot = () => {
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null)
   const restartMicTimerRef = useRef<NodeJS.Timeout | null>(null)
   const [isDebouncing, setIsDebouncing] = useState(false)
+
+  // context lang
+  const { language, t } = useLanguage() // Add this line
 
   // Refs for tracking state
   const voiceStateRef = useRef<VoiceState>("idle")
@@ -146,7 +149,7 @@ const Chatbot = () => {
           recognitionRef.current = new SpeechRecognitionConstructor()
           recognitionRef.current.continuous = true
           recognitionRef.current.interimResults = true
-          recognitionRef.current.lang = "en-US"
+          recognitionRef.current.lang =  language.voiceCode // "en-US"
 
           recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
             // Skip processing if we're speaking to avoid feedback loop
@@ -267,7 +270,7 @@ const Chatbot = () => {
       }
     }
     return recognitionInitializedRef.current
-  }, [])
+  }, [language.code])
 
   // Initialize speech recognition on component mount
   useEffect(() => {
@@ -299,10 +302,12 @@ const Chatbot = () => {
   useEffect(() => {
     console.log(transcript, finalTranscript) // remove this in next version
     const interval = setInterval(() => {
-      setDynamicText(dynamicTexts[Math.floor(Math.random() * dynamicTexts.length)])
+      const randomIndex = Math.floor(Math.random() * dynamicTexts.length)
+      const textKey = `dynamicTexts.${dynamicTexts[randomIndex]}`
+      setDynamicText(t(textKey))
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [t])
 
   const toggleVoiceMode = () => {
     const newVoiceMode = !voiceMode
@@ -463,7 +468,7 @@ const Chatbot = () => {
       speechSynthesisRef.current = utterance
 
       // Configure the utterance
-      utterance.lang = "en-US"
+      utterance.lang =  language.voiceCode  //"en-US"
       utterance.rate = 1.0
       utterance.pitch = 1.0
 
@@ -588,7 +593,10 @@ const Chatbot = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userInput }),
+        body: JSON.stringify({ 
+          message: userInput,
+          language: language.code,
+        }),
       })
 
       if (!response.ok) {
@@ -676,7 +684,7 @@ const Chatbot = () => {
               className={`${darkMode ? "bg-gray-900" : "bg-blue-600"} text-white p-4 rounded-t-lg flex justify-between items-center`}
             >
               <h3 className="text-lg font-semibold flex items-center">
-                <FaRobot className="mr-2" /> AmitBot 9000
+              <FaRobot className="mr-2" /> {t("chatbot.title")}
               </h3>
               <div className="flex items-center">
                 <button onClick={toggleDarkMode} className="mr-4 hover:text-gray-300 transition-colors">
@@ -695,7 +703,7 @@ const Chatbot = () => {
                 // prev css : h-full flex flex-col items-center justify-center 
                 <div className="h-full flex flex-col items-center justify-center relative">
                   
-                  <h2 className="text-2xl font-semibold mb-2 text-center">Voice Assistant</h2>
+                  <h2 className="text-2xl font-semibold mb-2 text-center">{t("chatbot.voiceAssistant")}</h2>
                   <button
                     onClick={toggleVoiceMode}
                     className="absolute top-0 right-0 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-full p-2 transition-colors"
@@ -749,12 +757,12 @@ const Chatbot = () => {
                   </motion.div>
                   <p className={`text-center ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
                     {isListening
-                      ? "Listening... Speak now"
+                      ? t("chatbot.listening")
                       : isSpeaking
-                        ? "Speaking..."
+                        ? t("chatbot.speaking")
                         : isDebouncing
-                          ? "Processing..."
-                          : "Voice mode active. Tap the microphone to speak."}
+                          ? t("chatbot.processing")
+                          : t("chatbot.voiceModeActive")}
                   </p>
                   {input && (isListening || isDebouncing) && (
                     <div className={`mt-4 p-3 rounded ${darkMode ? "bg-gray-800" : "bg-white"} max-w-xs text-center`}>
@@ -798,7 +806,7 @@ const Chatbot = () => {
                           animate={{ opacity: 1 }}
                           transition={{ repeat: Number.POSITIVE_INFINITY, duration: 0.8 }}
                         >
-                          AmitBot 9000 is thinking...
+                          {t("chatbot.thinking")}
                         </motion.span>
                       </span>
                     </div>
@@ -815,12 +823,12 @@ const Chatbot = () => {
                   {predefinedQuestions.map((question, index) => (
                     <motion.button
                       key={index}
-                      onClick={() => handleQuestionClick(question)}
+                      onClick={() => handleQuestionClick(t(`predefinedQuestions.${question.keyName}`))}
                       className={`text-xs ${darkMode ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-200 hover:bg-gray-300"} rounded px-2 py-1 transition-colors`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      {question}
+                      {t(`predefinedQuestions.${question.keyName}`)}
                     </motion.button>
                   ))}
                 </div>
@@ -832,7 +840,7 @@ const Chatbot = () => {
                       type="text"
                       value={input}
                       onChange={handleInputChange}
-                      placeholder="Ask about Amit..."
+                      placeholder={t("chatbot.askAboutAmit")}
                       className={`flex-grow px-3 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                         darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-800"
                       }`}
@@ -878,20 +886,20 @@ const Chatbot = () => {
                     onClick={toggleVoiceMode}
                     className={`${voiceMode ? "rounded-lg" : "rounded-none"} px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white transition-colors flex items-center`}
                   >
-                    <FaMicrophone className="mr-2" /> Voice
+                    <FaMicrophone className="mr-2" /> {t("chatbot.voice")}
                   </button>
                 </div>
               </form>
               {voiceMode && (
                 <div className={`mt-2 text-xs text-center ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-                  {isListening
-                    ? "Listening... Speak now"
-                    : isSpeaking
-                      ? "Listening to response..."
-                      : isDebouncing
-                        ? "Processing your question..."
-                        : "Tap microphone to speak"}
-                </div>
+                {isListening
+                  ? t("chatbot.listening")
+                  : isSpeaking
+                    ? t("chatbot.listeningToResponse")
+                    : isDebouncing
+                      ? t("chatbot.processingQuestion")
+                      : t("chatbot.tapMicToSpeak")}
+              </div>
               )}
               {!voiceMode && (
                 <div className="mt-2 text-center">
@@ -900,7 +908,7 @@ const Chatbot = () => {
                     animate={{ opacity: [0.7, 1, 0.7] }}
                     transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
                   >
-                    <FaMicrophone className="mr-1" size={12} /> Try voice mode for a hands-free experience!
+                    <FaMicrophone className="mr-1" size={12} /> {t("chatbot.tryVoiceMode")}
                   </motion.p>
                 </div>
               )}

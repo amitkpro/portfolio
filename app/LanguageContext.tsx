@@ -9,22 +9,24 @@ export type Language = {
   name: string
   nativeName: string
   direction: "ltr" | "rtl"
+  voiceCode: string;
 }
 
 export const languages: Language[] = [
-  { code: "en", name: "English", nativeName: "English", direction: "ltr" },
-  { code: "es", name: "Spanish", nativeName: "Español", direction: "ltr" },
-  { code: "fr", name: "French", nativeName: "Français", direction: "ltr" },
-  { code: "de", name: "German", nativeName: "Deutsch", direction: "ltr" },
-  { code: "zh", name: "Chinese", nativeName: "中文", direction: "ltr" },
-  { code: "ja", name: "Japanese", nativeName: "日本語", direction: "ltr" },
-  { code: "ar", name: "Arabic", nativeName: "العربية", direction: "rtl" },
-  { code: "hi", name: "Hindi", nativeName: "हिन्दी", direction: "ltr" },
-  { code: "ru", name: "Russian", nativeName: "Русский", direction: "ltr" },
-  { code: "pt", name: "Portuguese", nativeName: "Português", direction: "ltr" },
-  { code: "it", name: "Italian", nativeName: "Italiano", direction: "ltr" },
-  { code: "ko", name: "Korean", nativeName: "한국어", direction: "ltr" },
-]
+  { code: "en", name: "English", nativeName: "English", direction: "ltr", voiceCode: "en-US" },
+  { code: "es", name: "Spanish", nativeName: "Español", direction: "ltr", voiceCode: "es-ES" },
+  { code: "fr", name: "French", nativeName: "Français", direction: "ltr", voiceCode: "fr-FR" },
+  { code: "de", name: "German", nativeName: "Deutsch", direction: "ltr", voiceCode: "de-DE" },
+  { code: "zh", name: "Chinese", nativeName: "中文", direction: "ltr", voiceCode: "zh-CN" },
+  { code: "ja", name: "Japanese", nativeName: "日本語", direction: "ltr", voiceCode: "ja-JP" },
+  { code: "ar", name: "Arabic", nativeName: "العربية", direction: "rtl", voiceCode: "ar-SA" },
+  { code: "hi", name: "Hindi", nativeName: "हिन्दी", direction: "ltr", voiceCode: "hi-IN" },
+  { code: "ru", name: "Russian", nativeName: "Русский", direction: "ltr", voiceCode: "ru-RU" },
+  { code: "pt", name: "Portuguese", nativeName: "Português", direction: "ltr", voiceCode: "pt-PT" },
+  { code: "it", name: "Italian", nativeName: "Italiano", direction: "ltr", voiceCode: "it-IT" },
+  { code: "ko", name: "Korean", nativeName: "한국어", direction: "ltr", voiceCode: "ko-KR" },
+];
+
 
 type LanguageContextType = {
   language: Language
@@ -1278,4 +1280,5 @@ const translations = {
       ko: "아밋의 관심사는 무엇인가요?",
     },
   },
+  
 }

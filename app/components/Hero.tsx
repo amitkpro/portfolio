@@ -7,7 +7,8 @@ import { useDarkMode } from "../DarkModeContext"
 import { useLanguage } from "../LanguageContext"
 
 const Hero = () => {
-  const cvUrl = "https://drive.google.com/file/d/1lzLWa_WUN_yZ3nY_58YwtjQca_-ABZlv/view?usp=sharing"
+  const cvUrl = process.env.NEXT_PUBLIC_CV_URL
+  let downloadUrl = process.env.NEXT_PUBLIC_DOWNLOAD_URL
   const { darkMode } = useDarkMode()
   const { t, language } = useLanguage()
   const [typewriterText, setTypewriterText] = useState("")
@@ -30,6 +31,14 @@ const Hero = () => {
     }
   }, [textIndex, fullText])
 
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = `${downloadUrl}`; 
+    link.download = "Amit_Kumar_CV.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <motion.section
       id="hero"
@@ -89,15 +98,14 @@ const Hero = () => {
           >
             <FaFileAlt className="mr-2" /> {t("hero.viewCV")}
           </motion.a>
-          <motion.a
-            href={cvUrl}
-            download="Amit_Kumar_CV.pdf"
-            className={`${darkMode ? "bg-green-600 text-white hover:bg-green-700" : "bg-green-500 text-white hover:bg-green-600"} px-6 py-3 rounded-full font-semibold transition duration-300 flex items-center`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <FaDownload className="mr-2" /> {t("hero.downloadCV")}
-          </motion.a>
+          <motion.button
+  onClick={handleDownload}
+  className={`${darkMode ? "bg-green-600 text-white hover:bg-green-700" : "bg-green-500 text-white hover:bg-green-600"} px-6 py-3 rounded-full font-semibold transition duration-300 flex items-center`}
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+>
+  <FaDownload className="mr-2" /> {t("hero.downloadCV")}
+</motion.button>
         </div>
       </div>
     </motion.section>
