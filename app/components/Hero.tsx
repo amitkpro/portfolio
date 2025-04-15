@@ -8,7 +8,7 @@ import { useLanguage } from "../LanguageContext"
 
 const Hero = () => {
   const cvUrl = process.env.NEXT_PUBLIC_CV_URL
-  let downloadUrl = process.env.NEXT_PUBLIC_DOWNLOAD_URL
+  const downloadUrl = process.env.NEXT_PUBLIC_DOWNLOAD_URL
   const { darkMode } = useDarkMode()
   const { t, language } = useLanguage()
   const [typewriterText, setTypewriterText] = useState("")
